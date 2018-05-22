@@ -6,6 +6,17 @@ object, video {
   max-width: 100%;
 }
 
+.container{
+  width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+#map-container,
+#filter-container{
+  width: 100%;
+}
+
 body,td,th,p{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
@@ -136,6 +147,7 @@ nav h1 a {
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
+  width: 100%;
   background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
