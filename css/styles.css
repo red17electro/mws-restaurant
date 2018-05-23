@@ -6,6 +6,20 @@ object, video {
   max-width: 100%;
 }
 
+.skip-link{
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #BF1722;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus{
+  top: 0;
+}
+
 .container{
   width: 100%;
   flex-wrap: wrap;
