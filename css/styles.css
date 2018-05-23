@@ -19,9 +19,9 @@ object, video {
 
 body,td,th,p{
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
+	font-size: 16px;
 	color: #333;
-	line-height: 1.5;
+	line-height: 1.2em;
 }
 body {
 	background-color: #fdfdfd;
@@ -76,10 +76,11 @@ nav h1 {
 }
 nav h1 a {
   color: #fff;
-  font-size: 14pt;
+  font-size: 18px;
   font-weight: 200;
   letter-spacing: 10px;
   text-transform: uppercase;
+  line-height: 1.25em;
 }
 #breadcrumb {
     padding: 10px 40px 16px;
