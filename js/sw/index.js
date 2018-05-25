@@ -6,8 +6,7 @@ self.addEventListener('install', function(event){
         '/img',
         '/js/dbhelper.js',
         '/js/main.js',
-        '/js/restaurant_info.js',
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyBTdzmtC0LLnlXCT8Pj-kO1CshADh04DxQ&libraries=places&callback=initMap'
+        '/js/restaurant_info.js'
     ];
     
     event.waitUntil(
