@@ -121,9 +121,13 @@ nav h1 a {
   #restaurant-container, #reviews-container{
     width: 100%;
   }
+
+  #breadcrumb {
+    width: 100%;
+  }
 }
 
-@media screen and (min-width: 451px) and (max-width: 700px) {
+@media screen and (min-width: 451px) and (max-width: 600px) {
   .inside #map-container {
     height: 250px;
     position: relative;
@@ -137,9 +141,13 @@ nav h1 a {
   #restaurant-container, #reviews-container{
     width: 100%;
   }
+
+  #breadcrumb {
+    width: 100%;
+  }
 }
 
-@media screen and (min-width: 701px) and (max-width: 1149px) {
+@media screen and (min-width: 601px) and (max-width: 755px) {
   .inside #map-container {
     height: 350px;
     position: relative;
@@ -153,9 +161,17 @@ nav h1 a {
   #restaurant-container, #reviews-container{
     width: 100%;
   }
+
+  #reviews-list li p{
+    font-size: 18px;
+  }
+
+  #breadcrumb {
+    width: 100%;
+  }
 }
 
-@media screen and (min-width: 1150px){
+@media screen and (min-width: 756px){
   .inside #map-container {
     height: 87%;
     position: fixed;
@@ -169,6 +185,15 @@ nav h1 a {
   #restaurant-container, #reviews-container{
     width: 50%;
   }
+
+  #reviews-list li p{
+    font-size: 18px;
+  }
+
+  #reviews-list li {
+    padding: 0 5px 20px 5px !important;
+  }
+
 }
 
 /* Display list items side by side */
@@ -357,7 +382,7 @@ nav h1 a {
 }
 #reviews-list li {
   background-color: #fff;
-    border: 2px solid #f3f3f3;
+    border: 2px solid #000000;
   display: block;
   list-style-type: none;
   margin: 0 0 30px;
