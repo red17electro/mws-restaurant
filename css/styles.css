@@ -96,6 +96,7 @@ nav h1 a {
   letter-spacing: 10px;
   text-transform: uppercase;
   line-height: 1.25em;
+  font-family: 'Orbitron', sans-serif;
 }
 #breadcrumb {
     padding: 10px 40px 16px;
@@ -113,7 +114,7 @@ nav h1 a {
     width: 100%;
   }
 
-  .inside #footer {
+  #footer {
     padding: 0px !important;
   }
 
@@ -129,7 +130,7 @@ nav h1 a {
     width: 100%;
   }
 
-  .inside #footer {
+  #footer {
     padding: 10px !important;
   }
 
@@ -145,7 +146,7 @@ nav h1 a {
     width: 100%;
   }
 
-  .inside #footer {
+  #footer {
     padding: 15px !important;
   }
 
@@ -161,7 +162,7 @@ nav h1 a {
     width: 50%;
   }
 
-  .inside #footer {
+  #footer {
     padding: 25px !important;
   }
 
@@ -274,13 +275,14 @@ nav h1 a {
   color: #000;
   display: inline-block;
   font-size: 10pt;
-  margin: 15px 0 0;
+  margin: 15px 0 0 20%;
   padding: 8px 30px 10px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   min-width: 48px;
   min-height: 48px;
+  font-weight: bold;
 }
 
 /* ====================== Restaurant Details ====================== */
