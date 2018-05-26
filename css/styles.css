@@ -180,9 +180,8 @@ nav h1 a {
   width: 270px;
 }
 #restaurants-list .restaurant-img {
-  background-color: #ccc;
   display: block;
-  margin: 0;
+  margin: 10px 0 0 0;
   max-width: 100%;
   min-height: 248px;
   min-width: 100%;
