@@ -138,7 +138,7 @@ nav h1 a {
   }
 }
 
-@media screen and (min-width: 700px) and (max-width: 950px) {
+@media screen and (min-width: 701px) and (max-width: 1149px) {
   .inside #map-container {
     height: 350px;
     position: relative;
@@ -154,7 +154,7 @@ nav h1 a {
   }
 }
 
-@media screen and (min-width: 900px){
+@media screen and (min-width: 1150px){
   .inside #map-container {
     height: 87%;
     position: fixed;
