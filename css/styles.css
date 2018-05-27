@@ -105,6 +105,8 @@ nav h1 a {
     font-size: 17px;
     margin: 0;
     width: calc(50% - 80px);
+    position: absolute;
+    top: 80px;
 }
 
 @media screen and (max-width: 450px){
