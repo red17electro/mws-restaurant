@@ -1,4 +1,4 @@
-self.addEventListener('install', function(event){
+self.addEventListener('install', function (event) {
     var urlsToCache = [
         '/',
         '/css/styles.css',
@@ -8,17 +8,17 @@ self.addEventListener('install', function(event){
         '/js/main.js',
         '/js/restaurant_info.js'
     ];
-    
+
     event.waitUntil(
-        caches.open('restaurant-v1').then(function(cache){
+        caches.open('restaurant-v1').then(function (cache) {
             return cache.addAll(urlsToCache);
         })
     );
 });
 
-self.addEventListener('fetch', function(event){
+self.addEventListener('fetch', function (event) {
     event.respondWith(
-        caches.match(event.request).then(function(response){
+        caches.match(event.request).then(function (response) {
             if (response) return response;
             return fetch(event.request);
         })

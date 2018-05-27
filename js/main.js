@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 let restaurants,
   neighborhoods,
   cuisines
@@ -20,9 +22,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 registerServiceWorker = () => {
   if (!navigator.serviceWorker) return;
 
-  navigator.serviceWorker.register('/js/sw/index.js').then(function(){
+  navigator.serviceWorker.register('/js/sw/index.js').then(function () {
     console.log("Service Worker registered!");
-  }).catch(function(){
+  }).catch(function () {
     console.log("Registration of the Service Worker failed");
   });
 }
