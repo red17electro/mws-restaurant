@@ -7,7 +7,7 @@ var map;
 var markers = [];
 
 /**
- * Fetch neighborhoods and cuisines as soon as the page is loaded.
+ * Register Service Worker, Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   registerServiceWorker();
@@ -29,7 +29,7 @@ window.addEventListener('load', (event) => {
 registerServiceWorker = () => {
   if (!navigator.serviceWorker) return;
 
-  navigator.serviceWorker.register('/js/sw/index.js').then(function () {
+  navigator.serviceWorker.register('/sw.js').then(function () {
     console.log("Service Worker registered!");
   }).catch(function () {
     console.log("Registration of the Service Worker failed");
