@@ -16,6 +16,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 /**
+ * Manipulate the content on load
+ */
+window.addEventListener('load', (event) => {
+  centreDetailsButton();
+});
+
+/**
  * Register a service worker 
  */
 
@@ -27,6 +34,19 @@ registerServiceWorker = () => {
   }).catch(function () {
     console.log("Registration of the Service Worker failed");
   });
+};
+
+/**
+ * This function is centering the 'View Details' button
+ */
+
+centreDetailsButton = () => {
+  const list = document.getElementById('restaurants-list');
+  const buttons = list.getElementsByTagName('a');
+
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].style.left = 'calc(50% - ' + buttons[i].clientWidth +'px / 2)'; // calculating the left coordinate, where the button should locate itself
+  }
 };
 
 /**
