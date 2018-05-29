@@ -10,7 +10,6 @@ var markers = [];
  * Register Service Worker, Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  registerServiceWorker();
   fetchNeighborhoods();
   fetchCuisines();
 });
@@ -19,6 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
  * Manipulate the content on load
  */
 window.addEventListener('load', (event) => {
+  registerServiceWorker();
   centreDetailsButton();
 });
 

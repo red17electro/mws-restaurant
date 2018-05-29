@@ -5,7 +5,7 @@ var map;
 /**
  * Register Service Worker as soon as the page is loaded.
  */
-document.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('load', (event) => {
   registerServiceWorker();
 });
 
