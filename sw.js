@@ -1,9 +1,10 @@
 /*jshint esversion: 6 */
 
-const CACHES_NAME = 'restaurant-v1';
+var CACHES_NAME = 'restaurant-v1';
 
 self.addEventListener('install', function (event) {
-    const urlsToCache = [
+    var urlsToCache = [
+        '/',
         '/index.html',
         '/restaurant.html',
         '/css/styles.css',
@@ -22,6 +23,10 @@ self.addEventListener('install', function (event) {
         '/js/main.js',
         '/js/restaurant_info.js'
     ];
+
+    for (let i=1; i<=10; i++){
+        urlsToCache.push('/restaurant.html?id=' + i);
+    }
 
     event.waitUntil(
         caches.open(CACHES_NAME).then(function (cache) {
