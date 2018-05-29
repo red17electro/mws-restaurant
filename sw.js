@@ -1,27 +1,23 @@
 /*jshint esversion: 6 */
 
-const CACHES_NAME = 'restaurant-v1';
+var CACHES_NAME = 'restaurant-v1';
 
 self.addEventListener('install', function (event) {
-    const urlsToCache = [
+    var urlsToCache = [
+        '/',
         '/index.html',
         '/restaurant.html',
         '/css/styles.css',
         '/data/restaurants.json',
-        '/img/1.jpg',
-        '/img/2.jpg',
-        '/img/3.jpg',
-        '/img/4.jpg',
-        '/img/5.jpg',
-        '/img/6.jpg',
-        '/img/7.jpg',
-        '/img/8.jpg',
-        '/img/9.jpg',
-        '/img/10.jpg',
         '/js/dbhelper.js',
         '/js/main.js',
         '/js/restaurant_info.js'
     ];
+
+    for (let i=1; i<=10; i++){
+        urlsToCache.push('/img/' + i + '.jpg');
+        urlsToCache.push('/restaurant.html?id=' + i);
+    }
 
     event.waitUntil(
         caches.open(CACHES_NAME).then(function (cache) {
