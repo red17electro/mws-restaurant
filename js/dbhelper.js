@@ -18,7 +18,6 @@ class DBHelper {
    * Process the response of the fetch request
    */
   static status(response) {
-    debugger;
     if (response.status >= 200 && response.status < 300) {
       return Promise.resolve(response)
     } else {
@@ -31,7 +30,6 @@ class DBHelper {
    * Parse the received JSON data
    */
   static json(response) {
-    debugger;
     return response.json()
   }
 
