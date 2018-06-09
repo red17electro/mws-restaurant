@@ -3,6 +3,14 @@ let restaurant;
 var map;
 
 /**
+ * Initialize the database
+ */
+document.addEventListener('DOMContentLoaded', (event) => {
+  DBHelper.getDB();
+});
+
+
+/**
  * Register Service Worker as soon as the page is loaded.
  */
 window.addEventListener('load', (event) => {

@@ -7,20 +7,20 @@ var map;
 var markers = [];
 
 /**
- * Register Service Worker, Fetch neighborhoods and cuisines as soon as the page is loaded.
+ * Initialize the database, Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+  DBHelper.getDB();
   fetchNeighborhoods();
   fetchCuisines();
 });
 
 /**
- * Manipulate the content on load
+ * Register Service Worker and manipulate the content on load
  */
 window.addEventListener('load', (event) => {
   registerServiceWorker();
   centreDetailsButton();
-  DBHelper.getDB();
 });
 
 /**
@@ -46,7 +46,7 @@ centreDetailsButton = () => {
   const buttons = list.getElementsByTagName('a');
 
   for (var i = 0; i < buttons.length; i++) {
-    buttons[i].style.left = 'calc(50% - ' + buttons[i].clientWidth +'px / 2)'; // calculating the left coordinate, where the button should locate itself
+    buttons[i].style.left = 'calc(50% - ' + buttons[i].clientWidth + 'px / 2)'; // calculating the left coordinate, where the button should locate itself
   }
 };
 

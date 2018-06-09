@@ -13,14 +13,19 @@ class DBHelper {
     return `http://localhost:${port}/restaurants`;
   }
 
-  static getDB(){
-    var restaurantDBPromise = idb.open('restaurants-db', 1, function(upgradeDB){
-      switch(upgradeDB.oldVersion){
-          case 0:
-              var keyValStore = upgradeDB.createObjectStore('restaurants', {keyPath: 'id'});
+  /**
+   *  Store the promise of the database
+   *
+   */
+  static getDB() {
+    this.restaurantDBPromise = idb.open('restaurants-db', 1, function (upgradeDB) {
+      switch (upgradeDB.oldVersion) {
+        case 0:
+          var keyValStore = upgradeDB.createObjectStore('restaurants', {
+            keyPath: 'id'
+          });
       }
-  });
-    return restaurantDBPromise;
+    });
   }
 
 
@@ -52,10 +57,31 @@ class DBHelper {
       .then(DBHelper.status)
       .then(DBHelper.json)
       .then(function (restaurants) {
+        DBHelper.restaurantDBPromise.then(function (db) {
+          if (!db) return;
+
+          var tx = db.transaction('restaurants', 'readwrite');
+          var store = tx.objectStore('restaurants');
+          restaurants.forEach(function (restaurant) {
+            store.put(restaurant);
+          });
+        });
         callback(null, restaurants);
       })
       .catch(function (error) {
-        callback(error, null);
+        // When fetch fails, try to get the data from the database
+        DBHelper.restaurantDBPromise.then(function (db) {
+          if (!db) return;
+
+          var index = db.transaction('restaurants')
+            .objectStore('restaurants');
+
+          return index.getAll().then(function (restaurants) {
+            callback(null, restaurants);
+          });
+        }).catch(function () {
+          callback(error, null);
+        });
       });
   }
 
@@ -186,7 +212,6 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    debugger;
     return (`/img/${restaurant.photograph? restaurant.photograph + '.jpg' : 'No_image.svg'}`);
   }
 
