@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-var CACHES_NAME = 'restaurant-v1';
+var CACHES_NAME = 'restaurant-v2';
 
 self.addEventListener('install', function (event) {
     var urlsToCache = [
