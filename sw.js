@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-var CACHES_NAME = 'restaurant-v2';
+var CACHES_NAME = 'restaurant-v3';
 
 self.addEventListener('install', function (event) {
     var urlsToCache = [
@@ -8,6 +8,7 @@ self.addEventListener('install', function (event) {
         '/index.html',
         '/restaurant.html',
         '/css/styles.css',
+        '/js/jquery-3.3.1.min.js',
         '/js/dbhelper.js',
         '/js/main.js',
         '/js/restaurant_info.js',

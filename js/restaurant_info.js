@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
  */
 window.addEventListener('load', (event) => {
   registerServiceWorker();
+
+    /* add the title to the iframe of Google Maps*/
+    $gMapsIframe = $('#map-container').find('iframe');
+
+    if ($gMapsIframe){
+      $gMapsIframe.attr('title', 'Google Maps iframe');
+    }
 });
 
 /**
