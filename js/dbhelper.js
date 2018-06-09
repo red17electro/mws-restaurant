@@ -13,24 +13,44 @@ class DBHelper {
     return `http://localhost:${port}/restaurants`;
   }
 
+
+  /**
+   * Process the response of the fetch request
+   */
+  static status(response) {
+    debugger;
+    if (response.status >= 200 && response.status < 300) {
+      return Promise.resolve(response)
+    } else {
+      return Promise.reject(new Error(`Request failed. Returned status of ${response.statusText}`))
+    }
+  }
+
+
+  /**
+   * Parse the received JSON data
+   */
+  static json(response) {
+    debugger;
+    return response.json()
+  }
+
+
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
+    fetch(DBHelper.DATABASE_URL)
+      .then(DBHelper.status)
+      .then(DBHelper.json)
+      .then(function (restaurants) {
         callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
+      })
+      .catch(function (error) {
         callback(error, null);
-      }
-    };
-    xhr.send();
+      });
   }
+
 
   /**
    * Fetch a restaurant by its ID.
@@ -51,6 +71,7 @@ class DBHelper {
     });
   }
 
+
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
    */
@@ -67,6 +88,7 @@ class DBHelper {
     });
   }
 
+
   /**
    * Fetch restaurants by a neighborhood with proper error handling.
    */
@@ -82,6 +104,7 @@ class DBHelper {
       }
     });
   }
+
 
   /**
    * Fetch restaurants by a cuisine and a neighborhood with proper error handling.
@@ -104,6 +127,7 @@ class DBHelper {
     });
   }
 
+
   /**
    * Fetch all neighborhoods with proper error handling.
    */
@@ -121,6 +145,7 @@ class DBHelper {
       }
     });
   }
+
 
   /**
    * Fetch all cuisines with proper error handling.
@@ -140,6 +165,7 @@ class DBHelper {
     });
   }
 
+
   /**
    * Restaurant page URL.
    */
@@ -147,12 +173,14 @@ class DBHelper {
     return (`./restaurant.html?id=${restaurant.id}`);
   }
 
+
   /**
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return (`/img/${restaurant.id}.jpg`);
   }
+
 
   /**
    * Map marker for a restaurant.
@@ -167,5 +195,4 @@ class DBHelper {
     });
     return marker;
   }
-
 }
