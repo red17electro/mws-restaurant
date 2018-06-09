@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 window.addEventListener('load', (event) => {
   registerServiceWorker();
   centreDetailsButton();
+  DBHelper.getDB();
 });
 
 /**

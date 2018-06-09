@@ -13,6 +13,16 @@ class DBHelper {
     return `http://localhost:${port}/restaurants`;
   }
 
+  static getDB(){
+    var restaurantDBPromise = idb.open('restaurants-db', 1, function(upgradeDB){
+      switch(upgradeDB.oldVersion){
+          case 0:
+              var keyValStore = upgradeDB.createObjectStore('restaurants', {keyPath: 'id'});
+      }
+  });
+    return restaurantDBPromise;
+  }
+
 
   /**
    * Process the response of the fetch request
@@ -176,7 +186,8 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.id}.jpg`);
+    debugger;
+    return (`/img/${restaurant.photograph? restaurant.photograph + '.jpg' : 'No_image.svg'}`);
   }
 
 
