@@ -34,9 +34,9 @@ class DBHelper {
    */
   static status(response) {
     if (response.status >= 200 && response.status < 300) {
-      return Promise.resolve(response)
+      return Promise.resolve(response);
     } else {
-      return Promise.reject(new Error(`Request failed. Returned status of ${response.statusText}`))
+      return Promise.reject(new Error(`Request failed. Returned status of ${response.statusText}`));
     }
   }
 
@@ -45,7 +45,7 @@ class DBHelper {
    * Parse the received JSON data
    */
   static json(response) {
-    return response.json()
+    return response.json();
   }
 
 
@@ -212,7 +212,7 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph? restaurant.photograph + '.jpg' : 'No_image.svg'}`);
+    return (`/img/${restaurant.photograph? restaurant.photograph + '.webp' : 'No_image.svg'}`);
   }
 
 
