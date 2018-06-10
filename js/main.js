@@ -191,6 +191,7 @@ createRestaurantHTML = (restaurant) => {
   figure.className = 'restaurant-img';
   image.alt = 'Restaurant: ' + restaurant.name;
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.srcset = DBHelper.imageSrcSetAttrForRestaurant(restaurant);
   figure.append(image);
   figure.append(figCaption);
 

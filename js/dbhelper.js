@@ -212,9 +212,18 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
+    // TODO add check for Safari, Firefox, IE, regarding webp
     return (`/img/${restaurant.photograph? restaurant.photograph + '.webp' : 'No_image.svg'}`);
   }
 
+
+  /**
+   * Restaurant image srcset
+   */
+  static imageSrcSetAttrForRestaurant(restaurant) {
+    const fileName = restaurant.photograph;
+    return fileName ? `/img/${fileName}.webp 1x, /img/${fileName}@2x.webp 2x` : '';
+  }
 
   /**
    * Map marker for a restaurant.
