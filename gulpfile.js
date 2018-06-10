@@ -92,13 +92,13 @@ gulp.task('scripts_rest', function () {
 gulp.task('scripts_main-dist', function () {
     gulp.src(['js/**/*.js', '!js/restaurant*.js'])
         .pipe(babel())
-        .pipe(sourcemaps.init())
-        .pipe(concat('all_main.js'))
+        //.pipe(sourcemaps.init())
+        //.pipe(concat('all_main.js'))
         .pipe(uglifyes({
             mangle: false,
             ecma: 6
         }))
-        .pipe(sourcemaps.write())
+        //.pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'));
 });
 
@@ -106,13 +106,13 @@ gulp.task('scripts_main-dist', function () {
 gulp.task('scripts_rest-dist', function () {
     gulp.src(['js/**/*.js', '!js/main.js'])
         .pipe(babel())
-        .pipe(sourcemaps.init())
-        .pipe(concat('all_rest.js'))
+        //.pipe(sourcemaps.init())
+        //.pipe(concat('all_rest.js'))
         .pipe(uglifyes({
             mangle: false,
             ecma: 6
         }))
-        .pipe(sourcemaps.write())
+        //.pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'));
 });
 
