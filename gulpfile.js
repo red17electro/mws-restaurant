@@ -20,7 +20,7 @@ var replace = require('gulp-replace');
 var fs = require('fs');
 
 gulp.task('copy-images', function () {
-    /* Removing images from the previous build*/ 
+    /* Removing images from the previous build*/
     try {
         var files = fs.readdirSync('dist/img');
     } catch (e) {
@@ -73,24 +73,16 @@ gulp.task('copy-images', function () {
 });
 
 
-gulp.task('scripts_main', function () {
-    gulp.src(['js/**/*.js', '!js/restaurant*.js'])
+gulp.task('scripts', function () {
+    gulp.src(['js/**/*.js'])
         .pipe(babel())
-        .pipe(concat('all_main.js'))
+        //.pipe(concat('all_main.js'))
         .pipe(gulp.dest('dist/js'));
 });
 
 
-gulp.task('scripts_rest', function () {
-    gulp.src(['js/**/*.js', '!js/main.js'])
-        .pipe(babel())
-        .pipe(concat('all_rest.js'))
-        .pipe(gulp.dest('dist/js'));
-});
-
-
-gulp.task('scripts_main-dist', function () {
-    gulp.src(['js/**/*.js', '!js/restaurant*.js'])
+gulp.task('scripts-dist', function () {
+    gulp.src(['js/**/*.js'])
         .pipe(babel())
         //.pipe(sourcemaps.init())
         //.pipe(concat('all_main.js'))
@@ -102,19 +94,6 @@ gulp.task('scripts_main-dist', function () {
         .pipe(gulp.dest('dist/js'));
 });
 
-
-gulp.task('scripts_rest-dist', function () {
-    gulp.src(['js/**/*.js', '!js/main.js'])
-        .pipe(babel())
-        //.pipe(sourcemaps.init())
-        //.pipe(concat('all_rest.js'))
-        .pipe(uglifyes({
-            mangle: false,
-            ecma: 6
-        }))
-        //.pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/js'));
-});
 
 /* This task, for now, just copies css to the dist folder */
 gulp.task('styles', function () {
@@ -154,17 +133,16 @@ gulp.task('sw', function () {
 gulp.task('dist', [
     'copy-images',
     'styles',
-    'scripts_main-dist',
-    'scripts_rest-dist',
+    'scripts-dist',
     'manifest',
     'sw'
 ]);
 
-gulp.task('default', ['copy-images', 'styles', 'scripts_main', 'scripts_rest', 'manifest', 'sw'], function () {
+gulp.task('default', ['copy-images', 'styles', 'scripts', 'manifest', 'sw'], function () {
 
     gulp.watch('css/**/*.css', ['styles']);
     //gulp.watch('js/**/*.js', ['lint']);
-    gulp.watch('*.html', ['optimize-html']);
+    gulp.watch('*.html', ['styles']);
     gulp.watch('dist/*.html').on('change', browserSync.reload);
     /* ensures live editing*/
     browserSync.init({
