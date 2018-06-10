@@ -6,11 +6,7 @@
 
 Please, follow the next steps in order to run the project.
 
-1. First of all, you need to start the server from this repository:
-
-   ```` cmd 
-   https://github.com/red17electro/mws-restaurant-stage-2
-   ````
+1. First of all, you need to start the server from [this](https://github.com/red17electro/mws-restaurant-stage-2) repository (**!important)**.
 
    To do that, please run the command `node server` in the root directory of it.
 
