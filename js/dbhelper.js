@@ -212,8 +212,14 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
+    var fileName;
+    if (typeof restaurant === 'object') {
+      fileName = restaurant.photograph;
+    } else {
+      fileName = restaurant;
+    }
     // TODO add check for Safari, Firefox, IE, regarding webp
-    return (`/img/${restaurant.photograph? restaurant.photograph + '.webp' : 'No_image.svg'}`);
+    return (`/img/${fileName === 'undefined' || !fileName? 'No_image.svg': fileName + '.webp'}`);
   }
 
 
@@ -221,8 +227,14 @@ class DBHelper {
    * Restaurant image srcset
    */
   static imageSrcSetAttrForRestaurant(restaurant) {
-    const fileName = restaurant.photograph;
-    return fileName ? `/img/${fileName}.webp 1x, /img/${fileName}@2x.webp 2x` : '';
+    var fileName;
+    if (typeof restaurant === 'object') {
+      fileName = restaurant.photograph;
+    } else {
+      fileName = restaurant;
+    }
+
+    return fileName === 'undefined' || !fileName ? '' : `/img/${fileName}.webp 1x, /img/${fileName}@2x.webp 2x`;
   }
 
   /**

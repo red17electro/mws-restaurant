@@ -23,12 +23,51 @@ window.addEventListener('load', (event) => {
   centreDetailsButton();
 
   /* add the title to the iframe of Google Maps*/
-  $gMapsIframe = $('#map-container').find('iframe');
+  const iframe = document.querySelector('iframe')
+  if (iframe) {
+    iframe.title = 'Google Maps iframe';
+  }
 
-  if ($gMapsIframe){
-    $gMapsIframe.attr('title', 'Google Maps iframe');
+
+  // Get all of the images that are marked up to lazy load
+  const images = document.querySelectorAll('.js-lazy-image');
+  const config = {
+    // If the image gets within 50px in the Y axis, start the download.
+    rootMargin: '50px 0px',
+    threshold: 0.01
+  };
+
+  // If intersection observer is not supported 
+  if (!('IntersectionObserver' in window)) {
+    Array.from(images).forEach(image => preloadImage(image));
+  } else {
+    // It is supported, load the images
+    observer = new IntersectionObserver(onIntersection, config);
+    images.forEach(image => {
+
+      observer.observe(image);
+    });
   }
 });
+
+onIntersection = (entries) => {
+  // Loop through the entries
+  entries.forEach(entry => {
+    // Are we in viewport?
+    if (entry.intersectionRatio > 0) {
+
+      // Stop watching and load the image
+      observer.unobserve(entry.target);
+      preloadImage(entry.target);
+    }
+  });
+};
+
+
+preloadImage = (image) => {
+  image.src = DBHelper.imageUrlForRestaurant(image.getAttribute('data-src'));
+  image.srcset = DBHelper.imageSrcSetAttrForRestaurant(image.getAttribute('data-src'));
+}
 
 /**
  * Register a service worker 
@@ -190,8 +229,8 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   figure.className = 'restaurant-img';
   image.alt = 'Restaurant: ' + restaurant.name;
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.srcset = DBHelper.imageSrcSetAttrForRestaurant(restaurant);
+  image.setAttribute('data-src', restaurant.photograph);
+  image.className = 'js-lazy-image';
   figure.append(image);
   figure.append(figCaption);
 
