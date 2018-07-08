@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css?family=Orbitron:400,500");
+@import url(http://weloveiconfonts.com/api/?family=iconicfill);
 /* CSS Document */
 
 img,
@@ -265,7 +266,7 @@ nav h1 a {
   margin: 15px;
   min-height: 380px;
   padding: 0 30px 25px;
-  text-align: left;
+  text-align: center;
   width: 70%;
   position: relative;
 }
@@ -306,6 +307,7 @@ nav h1 a {
   max-width: 100%;
   min-height: 248px;
   min-width: 100%;
+  text-align: left;
 }
 
 #restaurants-list li h1 {
@@ -324,7 +326,7 @@ nav h1 a {
   font-size: 11pt;
 }
 
-#restaurants-list li a {
+#restaurants-list li figcaption a {
   background-color: orange;
   border-bottom: 3px solid #eee;
   color: #000;
@@ -537,7 +539,7 @@ textarea {
   appearance: none;
   width: 25px;
   height: 25px;
-  border-radius: 50%; 
+  border-radius: 50%;
   background: #4CAF50;
   cursor: pointer;
 }
@@ -548,4 +550,19 @@ textarea {
   border-radius: 50%;
   background: #4CAF50;
   cursor: pointer;
+}
+
+.favourite {
+  border-color: gold !important;
+}
+
+/* iconicfill */
+
+[class*="iconicfill-"]:before {
+  font-family: 'IconicFill', sans-serif;
+}
+
+#restaurants-list li .iconicfill-star {
+  text-align: center;
+  font-size: 1em;
 }

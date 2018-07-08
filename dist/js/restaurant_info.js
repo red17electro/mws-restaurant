@@ -183,7 +183,7 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
   rating.type = "range";
   rating.name = "rating";
   rating.min = "1";
-  rating.max = "10";
+  rating.max = "5";
 
   const comments = document.createElement('textarea');
   comments.name = "comments";

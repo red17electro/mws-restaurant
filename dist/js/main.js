@@ -215,6 +215,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
     ul.append(createRestaurantHTML(restaurant));
   });
   addMarkersToMap();
+  checkFavouriteRestaurants();
 };
 
 /**
@@ -224,6 +225,16 @@ createRestaurantHTML = restaurant => {
   const li = document.createElement('li');
   const figure = document.createElement('figure');
   const figCaption = document.createElement('figcaption');
+  const favButton = document.createElement('button');
+  const favDiv = document.createElement('div');
+
+  favDiv.className = "iconicfill-star";
+
+  favButton.addEventListener("click", function () {
+    makeFav(restaurant.id, !JSON.parse(restaurant.is_favorite));
+  });
+
+  favButton.append(favDiv);
 
   const image = document.createElement('img');
   figure.className = 'restaurant-img';
@@ -233,6 +244,7 @@ createRestaurantHTML = restaurant => {
   figure.append(image);
   figure.append(figCaption);
 
+  li.append(favButton);
   li.append(figure);
 
   const name = document.createElement('h2');
@@ -267,4 +279,38 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     });
     self.markers.push(marker);
   });
+};
+
+/** 
+ * Make restaurant a favourite 
+ */
+
+makeFav = (restaurant_id, flag) => {
+  fetch(`http://localhost:1337/restaurants/${restaurant_id}/?is_favorite=${flag}`, {
+    method: "PUT"
+  }).then(response => response.json()).then(function (restaurant) {
+    const ul = document.getElementById('restaurants-list');
+    const child = ul.childNodes[restaurant.id - 1];
+    child.className = "";
+    checkFavouriteRestaurants();
+
+    const favButton = child.querySelector('button');
+    favButton.addEventListener("click", function () {
+      makeFav(restaurant.id, !JSON.parse(restaurant.is_favorite));
+    });
+  }).catch(error => console.error(`Fetch Error =\n`, error));
+};
+
+/** 
+ * Mark restaurants with specific class if they are set as favourite by users
+ */
+
+checkFavouriteRestaurants = () => {
+  fetch(`http://localhost:1337/restaurants/?is_favorite=true`).then(response => response.json()).then(function (favRestaurants) {
+    favRestaurants.forEach(function (restaurant) {
+      const ul = document.getElementById('restaurants-list');
+      const child = ul.childNodes[restaurant.id - 1];
+      child.className = "favourite";
+    });
+  }).catch(error => console.error(`Fetch Error =\n`, error));
 };
