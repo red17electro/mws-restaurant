@@ -187,9 +187,9 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
 
   const comments = document.createElement('textarea');
   comments.name = "comments";
+  comments.placeholder = "Enter your review about the restaurant here";
   comments.rows = "15";
   comments.cols = "30";
-  comments.innerHTML = "Enter your review about the restaurant here";
 
   form.appendChild(name);
   form.appendChild(restId);
