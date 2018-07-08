@@ -107,6 +107,9 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   }
   // fill reviews
   fillReviewsHTML();
+
+  // create adding reviews form
+  addReviewsForm();
 };
 
 /**
@@ -150,6 +153,50 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   });
   container.appendChild(ul);
 };
+
+/**
+ * Create the form for adding reviews
+ */
+
+addReviewsForm = (rest_id = self.restaurant.id) => {
+  const container = document.getElementById('reviews-container');
+  const form = document.createElement('form');
+  
+  const submit = document.createElement('input');
+  submit.type = "submit";
+  submit.value = "Submit";
+
+  const name = document.createElement('input');
+  name.type = "text";
+  name.name = "firstname";
+  name.value = "Enter first name";
+
+  const restId = document.createElement('input');
+  restId.type = "text";
+  restId.name = "rest_id";
+  restId.value = rest_id;
+
+  const rating = document.createElement('input');
+  rating.className = "slider";
+  rating.type = "range";
+  rating.name = "rating";
+  rating.min = "1";
+  rating.max = "10";
+
+  const comments = document.createElement('textarea');
+  comments.name = "comments";
+  comments.rows = "15";
+  comments.cols = "30";
+  comments.innerHTML = "Enter your review about the restaurant here";
+
+  form.appendChild(name);
+  form.appendChild(restId);
+  form.appendChild(rating);
+  form.appendChild(comments);
+  form.appendChild(submit);
+
+  container.appendChild(form);
+}
 
 /**
  * Create review HTML and add it to the webpage.
