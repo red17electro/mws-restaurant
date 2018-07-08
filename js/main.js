@@ -230,9 +230,10 @@ createRestaurantHTML = (restaurant) => {
   const favDiv = document.createElement('div');
 
   favDiv.className = "iconicfill-star";
-
+  favButton.disabled = false;
   favButton.addEventListener("click", function () {
-    makeFav(restaurant.id, !JSON.parse(restaurant.is_favorite));
+    favButton.disabled = true;
+    makeFav(restaurant.id);
   });
 
   favButton.append(favDiv);
@@ -286,21 +287,20 @@ addMarkersToMap = (restaurants = self.restaurants) => {
  * Make restaurant a favourite 
  */
 
-makeFav = (restaurant_id, flag) => {
-  fetch(`http://localhost:1337/restaurants/${restaurant_id}/?is_favorite=${flag}`, {
-      method: "PUT",
-    }).then(response => response.json()).then(function (restaurant) {
-      const ul = document.getElementById('restaurants-list');
-      const child = ul.childNodes[restaurant.id - 1];
-      child.className = "";
-      checkFavouriteRestaurants();
-
-      const favButton = child.querySelector('button');
-      favButton.addEventListener("click", function () {
-        makeFav(restaurant.id, !JSON.parse(restaurant.is_favorite));
-      });
-    })
-    .catch(error => console.error(`Fetch Error =\n`, error));
+makeFav = (restaurant_id) => {
+  fetch(`http://localhost:1337/restaurants/${restaurant_id}`).then(response => response.json()).then(function (restaurant) {
+    fetch(`http://localhost:1337/restaurants/${restaurant.id}/?is_favorite=${!JSON.parse(restaurant.is_favorite)}`, {
+        method: "PUT",
+      }).then(response => response.json()).then(function (restaurant) {
+        const ul = document.getElementById('restaurants-list');
+        const child = ul.childNodes[restaurant.id - 1];
+        child.className = "";
+        checkFavouriteRestaurants();
+        const favButton = child.querySelector('button');
+        favButton.disabled = false;
+      })
+      .catch(error => console.error(`Fetch Error =\n`, error));
+  }).catch(error => console.error(`Fetch Error = \n`, error));
 }
 
 /** 
