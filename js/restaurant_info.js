@@ -168,13 +168,14 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
 
   const name = document.createElement('input');
   name.type = "text";
-  name.name = "firstname";
-  name.value = "Enter first name";
+  name.name = "name";
+  name.placeholder = "Enter first name";
 
   const restId = document.createElement('input');
   restId.type = "text";
-  restId.name = "rest_id";
+  restId.name = "restaurant_id";
   restId.value = rest_id;
+  restId.style.display = 'none';
 
   const rating = document.createElement('input');
   rating.className = "slider";
@@ -188,6 +189,23 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
   comments.placeholder = "Enter your review about the restaurant here";
   comments.rows = "15";
   comments.cols = "30";
+
+  form.onsubmit = function () {
+    fetch(`${DBHelper.SERVER_URL}/reviews/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({
+          "restaurant_id": restId.value,
+          "name": name.value,
+          "rating": rating.value,
+          "comments": comments.value
+        })
+      })
+      .then(() => window.location.href = `/restaurant.html?id=${rest_id}`)
+      .catch(error => console.error(`Fetch Error =\n`, error));
+  };
 
   form.appendChild(name);
   form.appendChild(restId);

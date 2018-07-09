@@ -287,8 +287,8 @@ addMarkersToMap = (restaurants = self.restaurants) => {
  */
 
 makeFav = restaurant_id => {
-  fetch(`http://localhost:1337/restaurants/${restaurant_id}`).then(response => response.json()).then(function (restaurant) {
-    fetch(`http://localhost:1337/restaurants/${restaurant.id}/?is_favorite=${!JSON.parse(restaurant.is_favorite)}`, {
+  fetch(`${DBHelper.SERVER_URL}/restaurants/${restaurant_id}`).then(response => response.json()).then(function (restaurant) {
+    fetch(`${DBHelper.SERVER_URL}/restaurants/${restaurant.id}/?is_favorite=${!JSON.parse(restaurant.is_favorite)}`, {
       method: "PUT"
     }).then(response => response.json()).then(function (restaurant) {
       const ul = document.getElementById('restaurants-list');
@@ -306,7 +306,7 @@ makeFav = restaurant_id => {
  */
 
 checkFavouriteRestaurants = () => {
-  fetch(`http://localhost:1337/restaurants/?is_favorite=true`).then(response => response.json()).then(function (favRestaurants) {
+  fetch(`${DBHelper.SERVER_URL}/restaurants/?is_favorite=true`).then(response => response.json()).then(function (favRestaurants) {
     favRestaurants.forEach(function (restaurant) {
       const ul = document.getElementById('restaurants-list');
       const child = ul.childNodes[restaurant.id - 1];
