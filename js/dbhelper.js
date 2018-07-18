@@ -30,6 +30,7 @@ class DBHelper {
           var keyValStore = upgradeDB.createObjectStore('restaurants', {
             keyPath: 'id'
           });
+          keyValStore.createIndex('id', 'id');
       }
     });
   }
