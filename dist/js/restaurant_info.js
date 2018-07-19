@@ -138,7 +138,6 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  * Create all reviews HTML and add them to the webpage.
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
-  debugger;
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
@@ -198,6 +197,7 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
 
     var item = {
       "restaurant_id": parseInt(restId.value),
+      "date": new Date().toDateString(),
       "name": name.value,
       "rating": rating.value,
       "comments": comments.value
@@ -232,12 +232,9 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
           },
           body: JSON.stringify(item)
         }).then(response => response.json()).then(function (response) {
-          console.log(response);
           window.location.href = `/restaurant.html?id=${rest_id}`;
-          console.log(`Done!`);
         }).catch(function () {
           window.location.href = `/restaurant.html?id=${rest_id}`;
-          console.log(`Done!`);
         });
       });
     });
@@ -261,9 +258,12 @@ createReviewHTML = review => {
   name.innerHTML = review.name;
   li.appendChild(name);
 
-  const date = document.createElement('p');
-  date.innerHTML = review.date;
-  li.appendChild(date);
+  debugger;
+  if (review.date) {
+    const date = document.createElement('p');
+    date.innerHTML = review.date;
+    li.appendChild(date);
+  }
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;

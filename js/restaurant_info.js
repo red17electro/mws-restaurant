@@ -195,6 +195,7 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
 
     var item = {
       "restaurant_id": parseInt(restId.value),
+      "date": new Date().toDateString(),
       "name": name.value,
       "rating": rating.value,
       "comments": comments.value
@@ -255,9 +256,11 @@ createReviewHTML = (review) => {
   name.innerHTML = review.name;
   li.appendChild(name);
 
-  const date = document.createElement('p');
-  date.innerHTML = review.date;
-  li.appendChild(date);
+  if (review.date) {
+    const date = document.createElement('p');
+    date.innerHTML = review.date;
+    li.appendChild(date);
+  }
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
