@@ -190,51 +190,50 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
   comments.rows = "15";
   comments.cols = "30";
 
-  const data = {
-    "restaurant_id": restId.value,
-    "name": name.value,
-    "rating": rating.value,
-    "comments": comments.value
-  };
-
   form.onsubmit = function (ev) {
     ev.preventDefault();
 
+    var item = {
+      "restaurant_id": parseInt(restId.value),
+      "name": name.value,
+      "rating": rating.value,
+      "comments": comments.value
+    };
+
     DBHelper.restaurantDBPromise.then(function (db) {
-      debugger;
       if (!db) return;
 
       var tx = db.transaction('restaurants', 'readwrite');
       var restaurantsStore = tx.objectStore('restaurants');
-      var idIndex = restaurantsStore.index('id');
 
-      return idIndex.openCursor();
-    }).then(function cursorIterate(cursor) {
-      if (!cursor) return;
+      return restaurantsStore.get(rest_id);
+    }).then(function (val) {
+      var temp = val;
+      DBHelper.restaurantDBPromise.then(function (db) {
+        var tx = db.transaction('restaurants', 'readwrite');
+        var store = tx.objectStore('restaurants');
 
-      console.log('Cursored at: ', cursor.value.id);
-
-      if (cursor.value.id === rest_id) {
-        debugger;
-        if (!cursor.value.reviews) {
-          cursor.value.reviews = [];
+        if (!temp.reviews) {
+          temp.reviews = [];
         }
 
-        cursor.value.reviews.push({
-          "name": name.value,
-          "rating": rating.value,
-          "comments": comments.value
-        });
+        temp.reviews.push(item);
 
-        cursor.update(cursor.value);
-      }
-
-      // cursor.update(newValue) -- to change the value
-      // cursor.delete() -- to remove the value
-      return cursor.continue().then(cursorIterate);
-    }).then(() => {
-      window.location.href = `/restaurant.html?id=${rest_id}`;
-      console.log(`Done!`)
+        store.put(temp);
+        return tx.complete;
+      }).then(function () {
+        fetch(`${DBHelper.SERVER_URL}/reviews/`, {
+          method: 'post',
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify(item)
+        }).then(response => response.json()).then(function (response) {
+          window.location.href = `/restaurant.html?id=${rest_id}`;
+        }).catch(function () {
+          window.location.href = `/restaurant.html?id=${rest_id}`;
+        })
+      });
     });
   };
 

@@ -84,10 +84,47 @@ class DBHelper {
     });
   }
 
+  /** 
+   * Fetch all reviews.
+   */
+
+  static fetchReviews(id, callback) {
+    fetch(`${DBHelper.SERVER_URL}/reviews/?restaurant_id=${id}`).then(DBHelper.status).then(DBHelper.json).then(function (reviews) {
+      DBHelper.restaurantDBPromise.then(function (db) {
+        if (!db) return;
+
+        var tx = db.transaction('restaurants', 'readwrite');
+        var store = tx.objectStore('restaurants');
+
+        return store.openCursor();
+      }).then(function addReview(cursor) {
+        var restaurant = cursor.value;
+        if (!cursor || restaurant.id !== id) return;
+
+        reviews.forEach(function (review) {
+          if (!restaurant.reviews) {
+            restaurant.reviews = [];
+          }
+
+          restaurant.reviews.push(review);
+          cursor.update(restaurant);
+        });
+        return cursor.continue().then(addReview);
+      });
+
+      callback(null, reviews);
+    }).catch(function () {
+      // implement catch
+      // TODO
+      // go through all the restaurants in idb and put the reviews from them into an array;
+    });
+  }
+
   /**
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
+    var id = parseInt(id);
     // fetch all restaurants with proper error handling.
     DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
@@ -96,7 +133,21 @@ class DBHelper {
         const restaurant = restaurants.find(r => r.id == id);
         if (restaurant) {
           // Got the restaurant
-          callback(null, restaurant);
+          DBHelper.fetchReviews(id, (error, reviews) => {
+            if (error) {
+              callback(error, null);
+            } else {
+              const foundReviews = [];
+              debugger;
+              reviews.forEach(function (review) {
+                if (review.restaurant_id === parseInt(id)) {
+                  foundReviews.push(review);
+                }
+              });
+              restaurant.reviews = foundReviews;
+              callback(null, restaurant);
+            }
+          });
         } else {
           // Restaurant does not exist in the database
           callback('Restaurant does not exist', null);
