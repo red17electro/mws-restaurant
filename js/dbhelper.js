@@ -125,9 +125,26 @@ class DBHelper {
 
         callback(null, reviews);
       }).catch(function () {
-        // implement catch
-        // TODO
-        // go through all the restaurants in idb and put the reviews from them into an array;
+        DBHelper.restaurantDBPromise.then(function (db) {
+          if (!db) return;
+
+          var tx = db.transaction('restaurants', 'readwrite');
+          var store = tx.objectStore('restaurants');
+
+          return store.openCursor();
+          /*           return index.getAll().then(function (restaurants) {
+                      callback(null, restaurants);
+                    }); */
+        }).then(function addReview(cursor) {
+          var restaurant = cursor.value;
+          if (!cursor || restaurant.id !== id) return;
+
+          callback(null, restaurant.reviews);
+
+          return cursor.continue().then(addReview);
+        }).catch(function () {
+          callback(error, null);
+        });
       });
   }
 
@@ -149,7 +166,6 @@ class DBHelper {
               callback(error, null);
             } else {
               const foundReviews = [];
-              debugger;
               reviews.forEach(function (review) {
                 if (review.restaurant_id === parseInt(id)) {
                   foundReviews.push(review);

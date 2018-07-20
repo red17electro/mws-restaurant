@@ -31,9 +31,27 @@ registerServiceWorker = () => {
 
   navigator.serviceWorker.register('/sw.js').then(function () {
     console.log("Service Worker registered!");
+    requestSync();
   }).catch(function () {
     console.log("Registration of the Service Worker failed");
   });
+};
+
+/*
+ * Subscribe for the sync event
+ */
+
+requestSync = () => {
+  debugger;
+  if (!navigator.serviceWorker) return;
+
+  navigator.serviceWorker.ready.then(function (swRegistration) {
+    debugger;
+    return swRegistration.sync.register('syncReviews');
+  }).then(function () {
+    debugger;
+    console.log(`Success!`);
+  }).catch(error => console.log(`Error thrown while syncing: ${error}`));
 };
 
 /**
@@ -220,6 +238,8 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
           temp.reviews = [];
         }
 
+        item.offline = true;
+
         temp.reviews.push(item);
 
         store.put(temp);
@@ -258,7 +278,6 @@ createReviewHTML = review => {
   name.innerHTML = review.name;
   li.appendChild(name);
 
-  debugger;
   if (review.date) {
     const date = document.createElement('p');
     date.innerHTML = review.date;
