@@ -91,7 +91,11 @@ self.addEventListener('sync', function (event) {
 
                 return cursor.continue().then(addReview);
             }).then(function () {
-                return Promise.all(promiseArray);
+                return Promise.all(promiseArray).then(function () {
+                    console.log(`Success! Promise all`);
+                }).catch(function (error) {
+                    throw 'Silenced Exception! ' + error;
+                });
             });
         })());
     }

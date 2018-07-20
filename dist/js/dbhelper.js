@@ -113,7 +113,7 @@ class DBHelper {
       });
 
       callback(null, reviews);
-    }).catch(function () {
+    }).catch(function (error) {
       DBHelper.restaurantDBPromise.then(function (db) {
         if (!db) return;
 

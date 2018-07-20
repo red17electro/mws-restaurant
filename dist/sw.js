@@ -51,8 +51,10 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('sync', function (event) {
+    debugger;
     if (event.tag === 'syncReviews') {
         event.waitUntil((function () {
+            debugger;
 
             if (typeof idb === "undefined" || typeof DBHelper === "undefined") {
                 self.importScripts('js/dbhelper.js', 'js/idb.js');
@@ -68,6 +70,7 @@ self.addEventListener('sync', function (event) {
 
                 return store.openCursor();
             }).then(function addReview(cursor) {
+                debugger;
 
                 if (!cursor) return;
 
@@ -91,7 +94,11 @@ self.addEventListener('sync', function (event) {
 
                 return cursor.continue().then(addReview);
             }).then(function () {
-                return Promise.all(promiseArray);
+                return Promise.all(promiseArray).then(function () {
+                    console.log(`Success! Promise all`);
+                }).catch(function (error) {
+                    throw 'Silenced Exception! ' + error;
+                });
             });
         })());
     }

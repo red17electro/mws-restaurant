@@ -42,11 +42,9 @@ registerServiceWorker = () => {
  */
 
 requestSync = () => {
-  if (!navigator.serviceWorker) return;
-
   navigator.serviceWorker.ready.then(function (swRegistration) {
     return swRegistration.sync.register('syncReviews');
-  }).then(function () {});
+  });
 };
 
 /**
@@ -266,6 +264,7 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
         }).then(response => response.json()).then(function (response) {
           window.location.href = `/restaurant.html?id=${rest_id}`;
         }).catch(function () {
+          alert("Unfortunately, the connection is lost. Therefore, the submitted review will be sent to the server once the connection is re-established.");
           window.location.href = `/restaurant.html?id=${rest_id}`;
         });
       });
