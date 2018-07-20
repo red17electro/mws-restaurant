@@ -51,7 +51,6 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('sync', function (event) {
-    debugger;
     if (event.tag === 'syncReviews') {
         event.waitUntil((function () {
 
@@ -62,7 +61,6 @@ self.addEventListener('sync', function (event) {
             let promiseArray = [];
             DBHelper.getDB();
             DBHelper.restaurantDBPromise.then(function (db) {
-                debugger;
                 if (!db) return;
 
                 var tx = db.transaction('restaurants', 'readwrite');
@@ -70,7 +68,6 @@ self.addEventListener('sync', function (event) {
 
                 return store.openCursor();
             }).then(function addReview(cursor) {
-                debugger;
 
                 if (!cursor) return;
 
@@ -94,7 +91,6 @@ self.addEventListener('sync', function (event) {
 
                 return cursor.continue().then(addReview);
             }).then(function () {
-                debugger;
                 return Promise.all(promiseArray);
             });
         })());

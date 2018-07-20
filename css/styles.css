@@ -503,7 +503,7 @@ input[type=text] {
 input[type=button],
 input[type=submit],
 input[type=reset] {
-  background-color: #4CAF50;
+  background-color: #252831;
   border: none;
   color: white;
   padding: 16px 32px;
@@ -540,7 +540,7 @@ textarea {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: #252831;
   cursor: pointer;
 }
 
@@ -548,7 +548,7 @@ textarea {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: #252831;
   cursor: pointer;
 }
 

@@ -182,7 +182,12 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
   const name = document.createElement('input');
   name.type = "text";
   name.name = "name";
+  name.id = "name-field";
   name.placeholder = "Enter first name";
+
+  const labelName = document.createElement('label');
+  labelName.setAttribute('for', name.id);
+  labelName.innerHTML = "Name";
 
   const restId = document.createElement('input');
   restId.type = "text";
@@ -193,15 +198,27 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
   const rating = document.createElement('input');
   rating.className = "slider";
   rating.type = "range";
+  rating.id = "id-field";
   rating.name = "rating";
   rating.min = "1";
   rating.max = "5";
+
+  const labelRating = document.createElement('label');
+  labelRating.setAttribute('for', rating.id);
+  labelRating.innerHTML = "Rating";
 
   const comments = document.createElement('textarea');
   comments.name = "comments";
   comments.placeholder = "Enter your review about the restaurant here";
   comments.rows = "15";
   comments.cols = "30";
+  comments.id = "comments-field";
+  comments.required = true;
+  comments.setAttribute('aria-required', true);
+
+  const labelComments = document.createElement('label');
+  labelComments.setAttribute('for', comments.id);
+  labelComments.innerHTML = "Comments";
 
   form.onsubmit = function (ev) {
     ev.preventDefault();
@@ -254,9 +271,12 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
   };
 
   form.appendChild(name);
+  form.appendChild(labelName);
   form.appendChild(restId);
   form.appendChild(rating);
+  form.appendChild(labelRating);
   form.appendChild(comments);
+  form.appendChild(labelComments);
   form.appendChild(submit);
 
   container.appendChild(form);
