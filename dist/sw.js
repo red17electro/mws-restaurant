@@ -51,10 +51,8 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('sync', function (event) {
-    debugger;
     if (event.tag === 'syncReviews') {
         event.waitUntil((function () {
-            debugger;
 
             if (typeof idb === "undefined" || typeof DBHelper === "undefined") {
                 self.importScripts('js/dbhelper.js', 'js/idb.js');
@@ -70,7 +68,6 @@ self.addEventListener('sync', function (event) {
 
                 return store.openCursor();
             }).then(function addReview(cursor) {
-                debugger;
 
                 if (!cursor) return;
 

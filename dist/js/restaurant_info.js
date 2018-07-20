@@ -175,6 +175,10 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
   const container = document.getElementById('reviews-container');
   const form = document.createElement('form');
 
+  const liName = document.createElement('li');
+  const liRating = document.createElement('li');
+  const liComments = document.createElement('li');
+
   const submit = document.createElement('input');
   submit.type = "submit";
   submit.value = "Submit";
@@ -187,7 +191,11 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
 
   const labelName = document.createElement('label');
   labelName.setAttribute('for', name.id);
-  labelName.innerHTML = "Name";
+  labelName.innerHTML = "Name: ";
+
+  liName.appendChild(labelName);
+  liName.appendChild(document.createElement('br'));
+  liName.appendChild(name);
 
   const restId = document.createElement('input');
   restId.type = "text";
@@ -205,7 +213,11 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
 
   const labelRating = document.createElement('label');
   labelRating.setAttribute('for', rating.id);
-  labelRating.innerHTML = "Rating";
+  labelRating.innerHTML = "Rating: ";
+
+  liRating.appendChild(labelRating);
+  liRating.appendChild(document.createElement('br'));
+  liRating.appendChild(rating);
 
   const comments = document.createElement('textarea');
   comments.name = "comments";
@@ -218,7 +230,11 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
 
   const labelComments = document.createElement('label');
   labelComments.setAttribute('for', comments.id);
-  labelComments.innerHTML = "Comments";
+  labelComments.innerHTML = "Comments: ";
+
+  liComments.appendChild(labelComments);
+  liComments.appendChild(document.createElement('br'));
+  liComments.appendChild(comments);
 
   form.onsubmit = function (ev) {
     ev.preventDefault();
@@ -271,13 +287,10 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
     });
   };
 
-  form.appendChild(name);
-  form.appendChild(labelName);
+  form.appendChild(liName);
   form.appendChild(restId);
-  form.appendChild(rating);
-  form.appendChild(labelRating);
-  form.appendChild(comments);
-  form.appendChild(labelComments);
+  form.appendChild(liRating);
+  form.appendChild(liComments);
   form.appendChild(submit);
 
   container.appendChild(form);
