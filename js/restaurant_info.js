@@ -173,14 +173,19 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 addReviewsForm = (rest_id = self.restaurant.id) => {
   const container = document.getElementById('reviews-container');
   const form = document.createElement('form');
+  const li = document.createElement('ul');
 
   const liName = document.createElement('li');
   const liRating = document.createElement('li');
+  const liRestId = document.createElement('li');
   const liComments = document.createElement('li');
+  const liSubmit = document.createElement('li');
 
   const submit = document.createElement('input');
   submit.type = "submit";
   submit.value = "Submit";
+
+  liSubmit.appendChild(submit);
 
   const name = document.createElement('input');
   name.type = "text";
@@ -200,7 +205,9 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
   restId.type = "text";
   restId.name = "restaurant_id";
   restId.value = rest_id;
-  restId.style.display = 'none';
+
+  liRestId.appendChild(restId);
+  liRestId.style.display = "none";
 
   const rating = document.createElement('input');
   rating.className = "slider";
@@ -297,12 +304,13 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
     };
   };
 
-  form.appendChild(liName);
-  form.appendChild(restId);
-  form.appendChild(liRating);
-  form.appendChild(liComments);
-  form.appendChild(submit);
+  li.appendChild(liName);
+  li.appendChild(liRestId);
+  li.appendChild(liRating);
+  li.appendChild(liComments);
+  li.appendChild(liSubmit);
 
+  form.appendChild(li);
   container.appendChild(form);
 }
 

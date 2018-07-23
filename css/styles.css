@@ -1,6 +1,6 @@
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css?family=Orbitron:400,500");
-@import url(http://weloveiconfonts.com/api/?family=iconicfill);
+@import url(https://use.fontawesome.com/releases/v5.1.1/css/all.css);
 /* CSS Document */
 
 img,
@@ -556,13 +556,11 @@ textarea {
   border-color: gold !important;
 }
 
-/* iconicfill */
-
-[class*="iconicfill-"]:before {
-  font-family: 'IconicFill', sans-serif;
-}
-
-#restaurants-list li .iconicfill-star {
+#restaurants-list li .fa-heart {
   text-align: center;
   font-size: 1em;
+}
+
+ul {
+  list-style-type: none;
 }

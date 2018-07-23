@@ -229,7 +229,7 @@ createRestaurantHTML = (restaurant) => {
   const favButton = document.createElement('button');
   const favDiv = document.createElement('div');
 
-  favDiv.className = "iconicfill-star";
+  favDiv.className = "fas fa-heart";
   favButton.disabled = false;
   favButton.addEventListener("click", function () {
     favButton.disabled = true;
