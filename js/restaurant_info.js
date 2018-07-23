@@ -32,7 +32,6 @@ registerServiceWorker = () => {
 
   navigator.serviceWorker.register('/sw.js').then(function () {
     console.log("Service Worker registered!");
-    requestSync();
   }).catch(function () {
     console.log("Registration of the Service Worker failed");
   });
@@ -45,6 +44,8 @@ registerServiceWorker = () => {
 requestSync = () => {
   navigator.serviceWorker.ready.then(function (swRegistration) {
     return swRegistration.sync.register('syncReviews');
+  }).catch(function (error) {
+    console.log(error);
   });
 }
 
@@ -236,6 +237,7 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
 
   form.onsubmit = function (ev) {
     ev.preventDefault();
+    requestSync();
 
     var item = {
       "restaurant_id": parseInt(restId.value),
@@ -245,44 +247,54 @@ addReviewsForm = (rest_id = self.restaurant.id) => {
       "comments": comments.value
     };
 
-    DBHelper.restaurantDBPromise.then(function (db) {
-      if (!db) return;
+    fetch(`${DBHelper.SERVER_URL}/reviews/`, {
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(item)
+    }).then(response => response.json()).then(function () {
+      // add to library and on callback change link
+      addReviewsToDB(false, function () {
+        window.location.href = `/restaurant.html?id=${rest_id}`;
+      })
+    }).catch(function () {
+      // add to library with offline tag and on callback change link
+      addReviewsToDB(true, function () {
+        alert("Unfortunately, the connection is lost. Therefore, the submitted review will be sent to the server once the connection is re-established.");
+        window.location.href = `/restaurant.html?id=${rest_id}`;
+      })
+    })
 
-      var tx = db.transaction('restaurants', 'readwrite');
-      var restaurantsStore = tx.objectStore('restaurants');
-
-      return restaurantsStore.get(rest_id);
-    }).then(function (val) {
-      var temp = val;
+    var addReviewsToDB = function (offlineFlag, callback) {
       DBHelper.restaurantDBPromise.then(function (db) {
+        if (!db) return;
+
         var tx = db.transaction('restaurants', 'readwrite');
-        var store = tx.objectStore('restaurants');
+        var restaurantsStore = tx.objectStore('restaurants');
 
-        if (!temp.reviews) {
-          temp.reviews = [];
-        }
+        return restaurantsStore.get(rest_id);
+      }).then(function (val) {
+        var temp = val;
+        DBHelper.restaurantDBPromise.then(function (db) {
+          var tx = db.transaction('restaurants', 'readwrite');
+          var store = tx.objectStore('restaurants');
 
-        item.offline = true;
+          if (!temp.reviews) {
+            temp.reviews = [];
+          }
 
-        temp.reviews.push(item);
+          item.offline = offlineFlag;
 
-        store.put(temp);
-        return tx.complete;
-      }).then(function () {
-        fetch(`${DBHelper.SERVER_URL}/reviews/`, {
-          method: 'post',
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify(item)
-        }).then(response => response.json()).then(function (response) {
-          window.location.href = `/restaurant.html?id=${rest_id}`;
-        }).catch(function () {
-          alert("Unfortunately, the connection is lost. Therefore, the submitted review will be sent to the server once the connection is re-established.");
-          window.location.href = `/restaurant.html?id=${rest_id}`;
-        })
+          temp.reviews.push(item);
+
+          store.put(temp);
+          return tx.complete;
+        }).then(function () {
+          callback();
+        });
       });
-    });
+    };
   };
 
   form.appendChild(liName);
