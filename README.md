@@ -6,7 +6,7 @@
 
 Please, follow the next steps in order to run the project.
 
-1. First of all, you need to start the server from [this](https://github.com/red17electro/mws-restaurant-stage-2) repository (**!important)**.
+1. First of all, you need to start the server from [this](https://github.com/red17electro/mws-restaurant-stage-3) repository (**!important)**.
 
    To do that, please run the command `node server` in the root directory of it.
 
@@ -18,7 +18,7 @@ In a terminal, check the version of Python you have: `python -V`. If you have Py
 
 #### Additional information 
 
-In case you want to rebuilt the whole project, run the command:
+In case you want to rebuild the whole project, run the command:
 
 ````cmd 
 gulp dist
