@@ -1,0 +1,14 @@
+{
+  "name": "mws-restaurant",
+  "private": true,
+  "version": "0.0.0",
+  "description": "PWA application",
+  "keywords": [],
+  "dependencies": {
+    "hoek": "4.2.1",
+    "lodash": "4.17.5",
+    "uglify-js": "2.6.0"
+  },
+  "author": "Server Khalilov",
+  "linkedIn": "https://www.linkedin.com/in/serverkhalilov/"
+}
