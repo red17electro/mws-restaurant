@@ -8,7 +8,7 @@ Please, follow the next steps in order to run the project.
 
 1. First of all, for the files `index.html` and `restaurant.html`, change the `YOUR_GOOGLE_MAP_API_KEY` to your actual Google Maps API Key.
 
-2. Then you need to start the server from [this](https://github.com/red17electro/mws-restaurant-stage-3) repository (**!important)**.
+2. Then you need to start the server from the `/server` folder ([it's here](https://github.com/red17electro/mws-restaurant/tree/master/server)) (**!important)**.
 
    To do that, please run the command `node server` in the root directory of it.
 
